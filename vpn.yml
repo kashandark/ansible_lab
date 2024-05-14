@@ -1,23 +1,12 @@
 ---
-- name: Connect to VPN and update packages
-  hosts: siemServer
-  become: yes
+- name: Check Ubuntu version
+  hosts: localhost
   tasks:
-    - name: Connect to VPN
-      command: nmcli con up id ray-digital-vpn
+    - name: Gather Ubuntu facts
+      ansible.builtin.setup:
+        gather_subset:
+          - all
 
-    - name: Wait for VPN connection to be established
-      wait_for:
-        host: localhost
-        port: 80
-        timeout: 30
-      become: no
-      ignore_errors: yes
-
-    - name: Update packages using apt-get
-      apt:
-        update_cache: yes
-
-    - name: Display update message
+    - name: Display Ubuntu version
       debug:
-        msg: "Packages have been updated."
+        msg: "Ubuntu version is {{ ansible_distribution_version }}"
