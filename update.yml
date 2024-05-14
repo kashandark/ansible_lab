@@ -1,0 +1,19 @@
+---
+- name: Update Ubuntu and connect/disconnect VPN
+  hosts: siemServer
+  become: true
+  tasks:
+    - name: Update Ubuntu using apt
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Connect to VPN using nmcli
+      command: nmcli con up id ray-digital-vpn
+      ignore_errors: yes
+
+    # Additional tasks if required while connected to VPN
+
+    - name: Disconnect VPN using nmcli
+      command: nmcli con down id ray-digital-vpn
+      ignore_errors: yes
