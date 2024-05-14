@@ -1,10 +1,23 @@
 ---
-- name: Connect to VPN using nmcli
-  hosts: siemServer
+- name: Connect to VPN and update packages
+  hosts: localhost
+  become: yes
   tasks:
     - name: Connect to VPN
       command: nmcli con up id ray-digital-vpn
 
-    - name: Display message after connecting to VPN
+    - name: Wait for VPN connection to be established
+      wait_for:
+        host: localhost
+        port: 80
+        timeout: 30
+      become: no
+      ignore_errors: yes
+
+    - name: Update packages using apt-get
+      apt:
+        update_cache: yes
+
+    - name: Display update message
       debug:
-        msg: "VPN connected successfully!"
+        msg: "Packages have been updated."
