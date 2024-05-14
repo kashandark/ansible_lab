@@ -1,6 +1,6 @@
 ---
 - name: Connect to VPN and update packages
-  hosts: localhost
+  hosts: siemServer
   become: yes
   tasks:
     - name: Connect to VPN
