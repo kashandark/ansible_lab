@@ -6,10 +6,18 @@
     - name: Connect to VPN
       command: nmcli con up id ray-digital-vpn
 
-    - name: Update package cache
+    - name: Wait for VPN connection to be established
+      wait_for:
+        host: localhost
+        port: 80
+        timeout: 30
+      become: no
+      ignore_errors: yes
+
+    - name: Update packages using apt-get
       apt:
         update_cache: yes
 
-    - name: Show message after updating packages
+    - name: Display update message
       debug:
-        msg: "Packages updated successfully"
+        msg: "Packages have been updated."
