@@ -1,0 +1,8 @@
+---
+- name: Connect to VPN using nmcli
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Connect to VPN
+      command: nmcli con up id ray-digital-vpn
+
