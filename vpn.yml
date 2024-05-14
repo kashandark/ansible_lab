@@ -1,7 +1,12 @@
 ---
-- name: Connect to VPN using nmcli
-  hosts: siemServer
+- name: Check Ubuntu version
+  hosts: localhost
   tasks:
-    - name: Connect to VPN
-      command: nmcli con up id ray-digital-vpn
+    - name: Gather Ubuntu facts
+      ansible.builtin.setup:
+        gather_subset:
+          - all
 
+    - name: Display Ubuntu version
+      debug:
+        msg: "Ubuntu version is {{ ansible_distribution_version }}"
