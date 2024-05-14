@@ -6,10 +6,6 @@
     - name: Connect to VPN
       command: nmcli con up id ray-digital-vpn
 
-    - name: Update packages using apt-get
-      apt:
-        update_cache: yes
-
     - name: Display update message
       debug:
         msg: "Packages have been updated."
