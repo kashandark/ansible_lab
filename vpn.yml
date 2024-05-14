@@ -1,12 +1,10 @@
 ---
-- name: Check Ubuntu version
+- name: Connect to VPN using nmcli
   hosts: localhost
   tasks:
-    - name: Gather Ubuntu facts
-      ansible.builtin.setup:
-        gather_subset:
-          - all
+    - name: Connect to VPN
+      command: nmcli con up id ray-digital-vpn
 
-    - name: Display Ubuntu version
+    - name: Display message after connecting to VPN
       debug:
-        msg: "Ubuntu version is {{ ansible_distribution_version }}"
+        msg: "VPN connected successfully!"
